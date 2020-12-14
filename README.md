@@ -22,4 +22,6 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-See [yarn package manager] (https://yarnpkg.com/).
+
+### yarn package manager
+[yarn package manager] (https://yarnpkg.com/).
