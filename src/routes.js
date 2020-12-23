@@ -6,6 +6,7 @@ import History from "./views/History"
 Vue.use(VueRouter)
 
 const mainRouter = new VueRouter({
+    mode:'history',
     routes: [
     {
         path: "/",
@@ -19,6 +20,9 @@ const mainRouter = new VueRouter({
         component: History,
         props: true,
 },
+
+
+
   ],
 })
 
