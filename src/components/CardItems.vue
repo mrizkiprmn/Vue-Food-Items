@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "card-items",
+  name: "card-product",
   data() {
     return {
       datas: {},
@@ -34,31 +34,32 @@ export default {
 </script>
 
 <style scoped>
-.item img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.item .title {
-  font-size: 20px;
-  margin: 0;
+.item {
+  margin: 10px;
 }
 
-.item .value {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0;
+img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px 10px 0px 0px;
 }
+
 .image {
   width: 250px;
   display: flex;
   flex-wrap: wrap;
-  margin: 30px
-}
-img {
-  border-radius: 10px 10px 0px 0px;
+  margin: 30px;
 }
 
-.item {
-  margin: 10px;
+.title {
+  font-size: 20px;
+  margin: 0;
 }
+
+.value {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
 </style>

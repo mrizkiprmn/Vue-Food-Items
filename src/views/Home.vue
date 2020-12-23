@@ -2,11 +2,11 @@
   <div class="home">
     <side-nav :modalAdd="true" />
     <section class="main-section">
-      <header-item :text="'Food Items'" :img="false" />
-
+      <header-item :text="'Food Items'"/>
+        
       <main class="container">
         <b-modal id="modal-add" hide-footer>
-          <template #modal-title> Add Item </template>
+          <template #modal-title> Add or Delete Item </template>
           <b-form class="m-3">
             <b-row>
 
@@ -45,42 +45,24 @@
                 <label class="mr-sm-4" for="input-category">category</label>
               </b-col>
               <b-col sm="9">
-                <b-form-select
-                  id="input-name"
-                  v-model="form.id_category"
-                  :options="options"
-                >
-                </b-form-select> </b-col></b-row
-            ><br />
-            
-            <b-button
-              class="btn-block"
-              variant="danger"
-              @click="addData()"
-              >Print</b-button
-            >
+                <b-form-select id="input-name" v-model="form.id_category" :options="options">
+                </b-form-select> </b-col></b-row><br />
+
+            <b-button class="btn-block" variant="info" @click="addData()">Add</b-button>
             <p class="text-center m-0"><b>OR</b></p>
-            <b-button
-              type="reset"
-              class="btn-block"
-              variant="info"
-              @click="resetData()"
-              >Send Email</b-button
-            >
+            <b-button type="reset" class="btn-block" variant="danger" @click="resetData()">Delete</b-button>
           </b-form>
         </b-modal>
+
         <b-modal id="modal-add-cart" class="modal-body" hide-footer>
-          <template #modal-title> Checkout </template>
+          <template #modal-title> Checkout
+            <h5 class="text-center mr-2">Receipt No: {{ Invoice }}</h5>
+          </template>
           <div class="modal-cart-align m-3">
             <p>Cashier : Jon</p>
-            <h4 class="mr-4">{{ randomInvoice }}</h4>
-          </div>
+            </div>
           <b-form class="m-3">
-            <div
-              class="modal-cart-align"
-              v-for="item in dataCart"
-              :key="item.id"
-            >
+            <div class="modal-cart-align" v-for="item in dataCart" :key="item.id">
               <p>{{ item.name }} {{ item.count }}</p>
               <p>Rp. {{ item.price }}</p>
             </div>
@@ -90,35 +72,20 @@
             </div>
             <div class="text-right">
               <p>Total Rp. {{ countModal }}</p>
+               <p class="text-left">Payment:Cash</p>
             </div>
             <br />
-            <b-button
-              class="btn-block"
-              variant="danger"
-              @click="modalOrder()"
-              >Print</b-button
-            >
+            <b-button class="btn-block" variant="danger" @click="modalOrder()">Print</b-button>
             <p class="text-center m-0"><b>OR</b></p>
-            <b-button type="reset" class="btn-block" variant="info"
-              >Send Email</b-button
-            >
+            <b-button type="reset" class="btn-block" variant="info">Send Email</b-button>
           </b-form>
         </b-modal>
 
-        <div
-          class="button-item"
-          @click="addCart(item)"
-          v-for="item in dataproduct"
-          :key="item.id"
-        >
-          <card-product
-            :name="item.name"
-            :price="Number(item.price)"
-            :image="item.image"
-            :category="item.category"
-          />
+        <div class="button-item" @click="addCart(item)" v-for="item in dataproduct" :key="item.id">
+          <card-product :name="item.name" :price="Number(item.price)" :image="item.image" :category="item.category"/>
         </div>
       </main>
+
     </section>
     <aside>
       <div class="shadow-sm header-cart">
@@ -126,40 +93,26 @@
           Cart <span class="span-cart">{{ dataCart.length }}</span>
         </h2>
       </div>
+
       <article v-if="dataCart && dataCart.length > 0">
         <div class="cart-wrap">
-          <cart-item
-            v-for="(item, index) in dataCart"
-            :key="item.id"
-            :data="item"
-            v-on:delete-row="deleteThisRow(index)"
-          />
+          <cart-item v-for="(item, index) in dataCart" :key="item.id" :data="item" v-on:delete-row="deleteThisRow(index)"/>
         </div>
+
         <article class="cart-order">
           <div class="order-total">
             <h4>Total</h4>
-            <h4>{{ countCart }}</h4>
+            <h4>{{ countCart }}*</h4>
           </div>
           <p class="text-left">*Belum termasuk ppn</p>
-          <b-button
-            class="mt-3"
-            variant="info"
-            v-b-modal="'modal-add-cart'"
-            block
-            @click="randomNumber()"
-            >Checkout</b-button
-          >
-          <b-button class="mt-2" variant="danger" @click="cancelCart()" block>
-            Cancel </b-button
+          <b-button class="mt-3" variant="info" v-b-modal="'modal-add-cart'" block @click="randomNumber()">Checkout</b-button>
+          <b-button class="mt-2" variant="danger" @click="cancelCart()" block>Cancel </b-button
           ><br /><br />
         </article>
       </article>
+
       <article v-else class="cart-empty">
-        <img
-          src="../assets/icon/food-and-restaurant.png"
-          class="icon-cartempty"
-          alt=""
-        />
+        <img src="../assets/icon/food-and-restaurant.png" class="icon-cartempty" alt=""/>
         <h4>Your cart is empty</h4>
         <p class="empty-desc">Please add some items from the menu</p>
       </article>
@@ -168,11 +121,10 @@
 </template>
 
 <script>
-
+import axios from "axios";
 import CardProduct from "../components/CardItems.vue";
 import HeaderItem from "../components/Header.vue";
 import SideNav from "../components/Navbar.vue";  
-import axios from "axios";
 import CartItem from "../components/CartTotal.vue";
 
 export default {
@@ -200,14 +152,11 @@ export default {
         name_product: "",
       },
       options: [],
-      randomInvoice: "",
+      Invoice: "",
       ppn: 0,
     };
   },
   methods: {
-    deleteThisRow(index) {
-      this.dataCart.splice(index, 1);
-    },
     addCart(data) {
       let result = this.dataCart.find((res) => {
         if (res.name == data.name) {
@@ -229,12 +178,12 @@ export default {
       this.dataCart = [];
     },
     randomNumber() {
-      this.randomInvoice = "#" + Math.round(Math.random() * 100000000 + 1);
-      this.ppn = (this.countCart * 10) / 100;
+      this.Invoice = "#" + Math.round(Math.random() * 100000000 + 1);
+      this.ppn = (this.countModal * 10) / 100;
     },
     modalOrder() {
       this.formOrder.amount = this.countModal;
-      this.formOrder.invoice = this.randomInvoice;
+      this.formOrder.invoice = this.Invoice;
       let arrayValue = [];
       this.dataCart.forEach((value) => {
         arrayValue.push(value.name);
@@ -243,7 +192,7 @@ export default {
       console.log(this.formOrder);
       axios({
         method: "post",
-        url: 'http://localhost:8888/history',
+        url: process.env.VUE_APP_HISTORY,
         headers: {
           "Content-Type": "application/json",
         },
@@ -254,13 +203,8 @@ export default {
           this.hideModal("modal-add-cart");
         })
         .catch((err) => {
-          alert(err.message);
+          console.log(err);
         });
-    },
-    hideModal(data) {
-      if (data == "modal-add-cart") {
-        this.$bvModal.hide(data);
-      }
     },
     addData() {
       if (
@@ -271,7 +215,7 @@ export default {
       ) {
         axios({
           method: "post",
-          url: process.env.VUE_APP_URL + "product",
+          url: process.env.VUE_APP_API,
           headers: {
             "Content-Type": "application/json",
           },
@@ -282,10 +226,10 @@ export default {
             location.reload();
           })
           .catch((err) => {
-            alert(err.message);
+            console.log(err);
           });
       } else {
-        alert("Please fill out the entire form, and fill it out correctly");
+        alert("Please fill the form");
       }
     },
   },
@@ -298,8 +242,8 @@ export default {
       return total;
     },
     countModal() {
-      let hasil = this.countCart + this.ppn;
-      return hasil;
+      let result = this.countCart + this.ppn;
+      return result;
     },
   },
   mounted() {
@@ -309,10 +253,10 @@ export default {
         this.dataproduct = res.data.result;
       })
       .catch((err) => {
-        alert(err.message);
+        console.log(err);
       });
     axios
-      .get('http://localhost:8888/category')
+      .get(process.env.VUE_APP_CATEGORY)
       .then((res) => {
         res.data.result.forEach((item) => {
           this.options.push({
@@ -322,7 +266,7 @@ export default {
         });
       })
       .catch((err) => {
-        alert(err.message);
+        console.log(err);
       });
   },
 };
