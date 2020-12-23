@@ -31,16 +31,29 @@ export default {
 </script>
 
 <style scoped>
+aside {
+  background-color: white;
+}
+
+img{
+  
+  width: 40px;
+  margin: 3px;
+  padding: 0;
+}
 nav {
   display: flex;
   flex-direction: column;
   height: auto;
-  background: #ffffff;
+  background-color: white;
   position: sticky;
   top: 50px;
 }
-.button {
+.button,
+:focus {
+  cursor: pointer;
   margin: 20px;
+  outline: none; 
 }
 .header-nav {
   margin: 10px 0;
@@ -51,9 +64,5 @@ nav {
 .router {
   color: black;
 }
-img{
-  width: 40px;
-  margin: 3px;
-  padding: 0;
-}
+
 </style>
