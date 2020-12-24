@@ -72,7 +72,7 @@ export default {
   },
   mounted() {
     axios
-      .get(process.env.VUE_APP_HISTORY)
+      .get('http://localhost:8888/history')
       .then((res) => {
         this.items = res.data.result;
       })
