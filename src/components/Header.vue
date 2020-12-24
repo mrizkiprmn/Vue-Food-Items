@@ -2,7 +2,17 @@
   <header class="border shadow-lg">
     <div class="title">
       <h2>{{ text }}</h2>
+    <b-form-input
+      id="inline-form-input-name"
+      class="form-search"
+      type="search"
+      v-model="inputValue"
+      v-on:keyup="emitToParent"
+      placeholder="Search Product"
+    ></b-form-input>
         <img src="../assets/icon/search.png" alt="">
+     
+     
       </div>
   </header>
 </template>
@@ -19,11 +29,40 @@ export default {
       type: String,
       required: true,
     }
+    
   },
-};
+   data() {
+    return {
+      inputValue: "",
+        options: [
+          {
+            value: true,
+            text: "Product",
+          },
+          {
+            value: false,
+            text: "Category",
+          },
+        ],
+      }
+   },
+   
+methods: {
+    emitToParent() {
+      this.$emit("searchToHome", this.inputValue);
+    },
+},
+
+   
+
+    };
 </script>
 
 <style scoped>
+.form-search {
+  width: 250px;
+  margin: 13px;
+}
 header {
   display: flex;
   position: sticky;
