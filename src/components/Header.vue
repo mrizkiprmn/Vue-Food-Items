@@ -91,5 +91,38 @@ img {
   padding: 0;
 }
 
+@media screen and (max-width: 360px) {
 
+  .form-search {
+    display: none;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+
+}
+@media screen and (min-width: 360px) {
+
+  .form-search {
+    display: none;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+ 
+}
+
+
+
+@media screen and (min-width: 1200px) {
+
+
+
+  h2 {
+    font-size: 1em;
+  }
+
+}
 </style>
