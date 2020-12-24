@@ -2,7 +2,7 @@
   <div class="home">
     <side-nav :modalAdd="true" />
     <section class="main-section">
-      <header-item :text="'Food Items'"/>
+      <header-item :text="'Food Items'" v-on:searchToHome="onSearch"/>
         
       <main class="container">
         <b-modal id="modal-add" hide-footer>
@@ -25,7 +25,7 @@
                 <label class="mr-sm-4" for="input-image">Image : </label>
               </b-col>
               <b-col sm="9">
-                <b-form-input id="input-image" v-model="form.image">
+                <b-form-input id="input-image" v-model="form.image" placeholder="URL">
                 </b-form-input>
               </b-col> </b-row
             ><br />
@@ -59,7 +59,7 @@
             <h5 class="text-center mr-2">Receipt No: {{ Invoice }}</h5>
           </template>
           <div class="modal-cart-align m-3">
-            <p>Cashier : Jon</p>
+            <p>Cashier : Rizki Permana</p>
             </div>
           <b-form class="m-3">
             <div class="modal-cart-align" v-for="item in dataCart" :key="item.id">
@@ -75,9 +75,9 @@
                <p class="text-left">Payment:Cash</p>
             </div>
             <br />
-            <b-button class="btn-block" variant="danger" @click="modalOrder()">Print</b-button>
+            <b-button class="btn-block" variant="info" @click="modalOrder()">Print</b-button>
             <p class="text-center m-0"><b>OR</b></p>
-            <b-button type="reset" class="btn-block" variant="info">Send Email</b-button>
+            <b-button type="back" class="btn-block" variant="danger" >Cancel</b-button>
           </b-form>
         </b-modal>
 
@@ -156,7 +156,22 @@ export default {
       ppn: 0,
     };
   },
+   
   methods: {
+    onSearch(value) {
+      axios
+        .get('http://localhost:8888/product?search=' + value)
+        .then((res) => {
+          if (res.data.result == "product not found") {
+            this.dataproduct = [];
+          } else {
+            this.dataproduct = res.data.result;
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    },
     addCart(data) {
       let result = this.dataCart.find((res) => {
         if (res.name == data.name) {
@@ -179,7 +194,7 @@ export default {
     },
     randomNumber() {
       this.Invoice = "#" + Math.round(Math.random() * 100000000 + 1);
-      this.ppn = (this.countModal * 10) / 100;
+      this.ppn = (this.countModal * 10.00) / 100;
     },
     modalOrder() {
       this.formOrder.amount = this.countModal;
@@ -192,7 +207,7 @@ export default {
       console.log(this.formOrder);
       axios({
         method: "post",
-        url: process.env.VUE_APP_HISTORY,
+        url: 'http://localhost:8888/history',
         headers: {
           "Content-Type": "application/json",
         },
@@ -206,24 +221,33 @@ export default {
           console.log(err);
         });
     },
+     
     addData() {
       if (
-        this.form.name &&
-        this.form.price &&
-        this.form.id_category &&
-        this.form.image
+        this.formAddProduct.name &&
+        this.formAddProduct.image &&
+        this.formAddProduct.price &&
+        this.formAddProduct.id_category
+        
       ) {
-        axios({
+         let formData = new FormData();
+        formData.append("name", this.formAddProduct.name);
+        formData.append("image", this.formAddProduct.image);
+        formData.append("price", this.formAddProduct.price);
+        formData.append("id_category", this.formAddProduct.id_category);
+        
+         axios({
           method: "post",
-          url: process.env.VUE_APP_API,
+          url: 'http://localhost:8888/product',
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
-          data: JSON.parse(JSON.stringify(this.form)),
+          data: formData,
         })
           .then((res) => {
             alert(res.data.description);
-            location.reload();
+            // location.reload();
+            this.mounted();
           })
           .catch((err) => {
             console.log(err);
@@ -256,7 +280,7 @@ export default {
         console.log(err);
       });
     axios
-      .get(process.env.VUE_APP_CATEGORY)
+      .get('http://localhost:8888/category')
       .then((res) => {
         res.data.result.forEach((item) => {
           this.options.push({
