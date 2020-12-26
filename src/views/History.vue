@@ -2,7 +2,7 @@
   <div class="history">
     <side-nav :modalAdd="false" />
    <section class="main-section">
-      <header-item :text="'History'" :searchicon="false" />
+      <header-item :text="'History'" />
       <main class="container">
           <div class="row mt-4">
         <div class="col-12 col-md-4">
@@ -72,7 +72,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:8888/history')
+      .get('http://3.88.180.191/api/history')
       .then((res) => {
         this.items = res.data.result;
       })
