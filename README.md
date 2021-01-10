@@ -6,6 +6,7 @@
 ##### yarn
 ##### bootstrap vue
 ##### axios
+##### Vuex
 
 -------------
 

@@ -1,65 +1,40 @@
 <template>
-  <div class="item p-2 m-2">
-    <div class="image">
-      <img :src="image" :alt="name" />
+  <div class="d-flex justify-content-center pb-3">
+    <div class="shadow" style="width: 18rem;" @click="addItems(prods)">
+      <img :src="images" :alt="name" class="card-img-top" />
+      <div class="card-body border-top">
+        <h5>{{ name }}</h5>
+        <h3 class="font-weight-bold">Rp.{{ price }}</h3>
+      </div>
     </div>
-    <p class="title">{{ name }}</p>
-    <p class="value">Rp. {{ price }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "card-product",
-  data() {
-    return {
-      datas: {},
-    };
-  },
+  name: "Card",
   props: {
+    images: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
     },
-    image: {
+    price: {
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
+    prods: {
+      type: Object,
       required: true,
-    },
+    }
   },
+  methods :{
+    addItems(value) {
+      this.$emit('addProd', value)
+    }
+  }
 };
 </script>
-
-<style scoped>
-.item {
-  margin: 10px;
-}
-
-img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 10px 10px 0px 0px;
-}
-
-.image {
-  width: 250px;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 30px;
-}
-
-.title {
-  font-size: 20px;
-  margin: 0;
-}
-
-.value {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
-}
-
-</style>
