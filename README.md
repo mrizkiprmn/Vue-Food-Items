@@ -1,4 +1,4 @@
-## This project using:
+## This project use:
 ##### Vue js
 ##### Vuex
 ##### Bootstrap Vue
