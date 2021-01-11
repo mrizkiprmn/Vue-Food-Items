@@ -32,6 +32,11 @@ $ yarn lint
 $ yarn add axios
 ```
 
+### Make State Management Pattern + Library for Vue.js Aplication
+```
+$ yarn add vuex
+```
+
 -------------------
 
 ### Customize configuration
