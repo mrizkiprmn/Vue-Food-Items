@@ -3,10 +3,10 @@
 
 ## This project using:
 ##### Vue js
-##### yarn
-##### bootstrap vue
-##### axios
 ##### Vuex
+##### Bootstrap Vue
+
+
 
 -------------
 
