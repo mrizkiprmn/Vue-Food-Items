@@ -1,6 +1,3 @@
-# Vue-Food-Items
--------------
-
 ## This project using:
 ##### Vue js
 ##### Vuex
