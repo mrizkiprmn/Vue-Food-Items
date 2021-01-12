@@ -1,4 +1,4 @@
-# Project Vue Js Fullstack
+# Project Vue Fullstack
 
 -----------------------------------------
 
