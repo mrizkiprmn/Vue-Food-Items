@@ -1,7 +1,6 @@
 <template>
 
-  <div class="row">
-  
+  <div v-if="role == 'admin'" class="row">
     <header
       class="col sticky-top bg-white d-flex justify-content-between py-4 shadow"
     >
