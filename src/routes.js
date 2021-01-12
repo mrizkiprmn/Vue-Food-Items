@@ -12,36 +12,45 @@ Vue.use(VueRouter)
 const mainRouter = new VueRouter({
     mode:'history',
     routes: [
-    {
-        path: "/",
+     {
+        path: "/login",
         name : "Login",
         component: Login
-    },
+  },
    
     {
         path: "/history",
         name: "History",
         component: History,
-},
+  },
+
     {
         path: "/home",
         name: "Home",
         component: Home,
-    },
+  },
+
     {
         path: "/products",
         name: "Products",
         component: Products,
-    },
+  },
+
     {
       path: "/register",
       name: "Register",
       component: Register,
   },
+
     {
-      path : "/*",
-      component : NotFoundPage,  
-    }
+      path : "/",
+      redirect: "/login",
+  },
+
+    {
+      path : "*",
+      component : NotFoundPage, 
+  },
 
   ],
 })
