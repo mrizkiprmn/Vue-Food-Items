@@ -8,7 +8,7 @@
       <h2></h2>
     </header>
     <main class="col-12 mt-3">
-      <div class="row mt-3">
+      <div v-if="role == 'admin'" class="row mt-3">
         <div class="col-6 col-md-4">
           <img src="../assets/history/Card.svg" alt="" class="card-img-top" />
         </div>
@@ -19,7 +19,7 @@
           <img src="../assets/history/Card 3.svg" alt="" class="card-img-top" />
         </div>
       </div>
-      <div  class="row mt-3">
+      <div v-if="role == 'admin'" class="row mt-3">
         <div class="col-6">
           <img src="../assets/history/Chart.svg" alt="" class="card-img-top" />
         </div>
