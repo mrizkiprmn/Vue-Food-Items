@@ -15,9 +15,9 @@
       <router-link to="/history" class="dropdown-item my-4">
         <img src="../assets/icon/clipboard.png" alt="" />
       </router-link>
-      <div 
-    
-      class="v dropdown-item my-4">
+      <div
+ 
+      class= "v dropdown-item my-4">
         <router-link to="/products">
           <img src="../assets/icon/add.png" alt="" />
         </router-link>

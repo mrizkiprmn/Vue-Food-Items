@@ -1,5 +1,5 @@
 {
-  "name": "fooditems",
+  "name": "vuefullstack",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,6 +16,7 @@
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-router": "^3.4.9",
     "vuelidate": "^0.7.6",
+    "vuelidate-error-extractor": "^2.4.1",
     "vuetify": "^2.4.1",
     "vuex": "^3.6.0",
     "vuex-persistedstate": "^4.0.0-beta.2"

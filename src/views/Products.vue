@@ -1,19 +1,18 @@
 <template>
 
-  <div 
-  class="row">
+  <div class="row">
   
     <header
       class="col sticky-top bg-white d-flex justify-content-between py-4 shadow"
     >
       <Navbar />
-      <h2 class="text-center">Products</h2>
+      <h2 class="text-center">Edit Produk Toko</h2>
       <h2></h2>
     </header>
     <main class="col-12 mt-4">
       <div class="row">
         <div class="col-12 col-lg-8">
-          <div class="card-body shadow">
+          <div class="card-body bg-dark">
             <!-- Button trigger modal Add Product -->
             <button type="button" class="btn btn-info shadow mb-3" data-toggle="modal" data-target="#modalAddProduct">
               Add Product
@@ -70,7 +69,7 @@
               </div>
             </div>
             <div class="table-responsive">
-              <table class="table text-center">
+              <table class="table text-center text-white">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
@@ -147,7 +146,7 @@
                                   </div>
                                 </div>
                                 <div class="row pt-3">
-                                  <label for="kategori_id" class="col-3 form-label pt-1">Category</label>
+                                  <label for="id_category" class="col-3 form-label pt-1">Category</label>
                                   <div class="col-9">
                                     <select class="form-select form-control" aria-label="Default select example" v-model="formProduct.id_category">
                                       <option selected></option>
@@ -177,7 +176,7 @@
           </div>
         </div>
         <div class="col-12 col-lg-4">
-          <div class="card-body shadow">
+          <div class="card-body bg-dark">
             <!-- Button trigger modal Add Category -->
             <button
               type="button"
@@ -229,7 +228,7 @@
               </div>
             </div>
 
-            <table class="table text-center">
+            <table class="table text-center text-white">
               <thead>
                 <tr>
                   <th scope="col">ID</th>

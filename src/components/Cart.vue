@@ -7,10 +7,10 @@
       <div class="col-8">
         <div class="">
           <p class="card-text pt-2">{{ name }}</p>
-          <div class="btn border" @click="less()">-</div>
-          <div class="btn border">{{ jumlah }}</div>
-          <div class="btn border" @click="plus(addItems)">+</div>
-          <h5 class="card-title pt-3">Rp.{{ price * jumlah }}</h5>
+          <div class="btn btn-danger" @click="less()">-</div>
+          <div class="btn border">{{ qty }}</div>
+          <div class="btn btn-primary " @click="plus(addItems)">+</div>
+          <h5 class="card-title pt-3">Rp.{{ price * qty}}</h5>
         </div>
       </div>
     </div>
@@ -33,24 +33,28 @@ export default {
       type: String,
       required: true,
     },
+    // jumlah : {
+    //   type : Number,
+    //   required : true,
+    // }
   },
   data() {
     return {
-      jumlah: 1,
+      qty: 1,
     };
   },
   methods: {
   
     plus() {
-      if (this.jumlah >= 1) {
-        this.jumlah += 1;
+      if (this.qty >= 1) {
+        this.qty += 1;
       }
     },
     less() {
-      if (this.jumlah == 1) {
+      if (this.qty == 1) {
         // this.jumlah -= 1;
       } else {
-        this.jumlah -= 1;
+        this.qty -= 1;
       }
     },
   },

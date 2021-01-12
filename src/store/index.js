@@ -13,7 +13,7 @@ export default new Vuex.Store({
         Product,
         auth,
         History,
-        Home
+        Home,
     },
     Plugins : [VuePersisDate]
 })

@@ -6,7 +6,7 @@
           <Navbar />
         </div>
         <div class="col-9 col-md-7 justify-content-between">
-          <h2 class="text-center">Food Items</h2>
+          <h2 class="text-center">Toko Serba Ada</h2>
           <h1></h1>
         </div>
         <div class="col-12 col-md-4 d-flex justify-content-end">
@@ -18,7 +18,7 @@
               @keyup="searchName()"
               @keyup.delete="searchName()"
             />
-          </form>
+          </form> 
           <button class="btn" @click="searchName()">
             <img src="../assets/search.png" alt="" />
           </button>
@@ -63,8 +63,8 @@
         class="row sticky-top bg-white py-4 d-flex justify-content-center border-bottom"
       >
         <h2 class="text-center">
-          Cart
-          <span class="p-cart-0 bg-success text-white rounded-circle">
+          Keranjang
+          <span class="p-cart-0 bg-light text-info rounded-circle">
             {{ chart.length }}
           </span>
         </h2>
@@ -135,12 +135,12 @@
                   </p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="col btn btn-secondary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
+                  <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
                     Print
                   </button>
-                  <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
+                  <!-- <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
                     Send Email
-                  </button>
+                  </button> -->
                 </div>
               </div>
             </div>
@@ -148,7 +148,7 @@
           <button
             type="button"
             class="col btn btn-danger mt-2"
-            @click="cencel()"
+            @click="cancel()"
           >
             Cancel
           </button>
@@ -157,9 +157,9 @@
       <div class="row" v-else>
         <div class="col container text-center">
           <img src="../assets/icon/food-and-restaurant.png" alt="" />
-          <h3>Your cart is empty</h3>
+          <h4>Keranjang belanja kamu kosong</h4>
           <p class="text-muted" style="font-size: 0.9rem;">
-            Please add some items from the menu
+            Pilih produk yang ingin dibeli di toko ini
           </p>
         </div>
       </div>
@@ -201,11 +201,14 @@ export default {
       },
       filter: false,
       cacheKey: 'token',
-      userKey: 'name',
-      username: '',
+      userKey: 'email',
+      roleKey: 'role',
+      role: '',
+      // username: '',
     };
   },
   methods: {
+    
     loadProducts(){
       axios.get(process.env.VUE_APP_PRODUCT, {
         headers: {
@@ -213,7 +216,7 @@ export default {
         }
       })
       .then((res) => {
-        if(res.data.result.name === 'TokenExpiredError'){
+        if(res.data.result.email === 'TokenExpiredError'){
           alert('Token Expired! Silahkan Login Lagi');
           router.push({ path: '/' });
         }else
@@ -290,7 +293,6 @@ export default {
       }
       this.checkout.amount = valueTotal;
       this.checkout.orders = valueOrder;
-      // this.checkout.user = valueUser;
       console.log(this.checkout)
       
       axios.post(process.env.VUE_APP_HISTORY, this.checkout, {
@@ -312,13 +314,13 @@ export default {
         this.chart.push(prod);
       } else {
         if (this.chart.includes(prod)) {
-          //   this.chart.pop();
+          // this.chart.push(prod);
         } else {
           this.chart.push(prod);
         }
       }
     },
-    cencel() {
+    cancel() {
       this.chart = [];
     },
     filterOn() {
@@ -345,7 +347,10 @@ export default {
     this.loadProducts()
     this.sortedProduct()
     this.searchName()
-    this.username = localStorage.getItem(this.userKey)
+    this.role = localStorage.getItem(this.roleKey)
+    console.log(this.role)
+    this.email = localStorage.getItem(this.userKey)
+
   },
 };
 </script>

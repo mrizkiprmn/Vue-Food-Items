@@ -11,7 +11,6 @@
            @focus="onFocus" 
            v-model="loginInfo.email"
            label="Email"
-           :class="{'is-invalid': $v.email.$error}"
            />
           <span data-placeholder="Email"></span>
       </div>
@@ -45,7 +44,6 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, email, password } from 'vuelidate/lib/validators'
 import Axios from 'axios'
 import router from '../routes'
 export default {
@@ -54,30 +52,17 @@ export default {
         return {
           showPassword: false,
           loginInfo: {
-            email: "",
-            password: "",
+            email: null,
+            password: null,
           },
           cacheKey:'token',
           roleKey:'role',
-          userKey:'username'
+          userKey:'email'
         }
     },
-    validations : {
-      email : {
-          required,
-          email,
-          maxLength : maxLength(50),
-      }
-    },
-    password : {
-        required,
-        password,
-        minLength : minLength(2)
-    },
+   
     methods: {
-
-       
-        login(value) {
+      login(value) {
             Axios.post(process.env.VUE_APP_AUTH, value)
             .then((res) => {
         if(res.data.result[0].msg === 'Email belum terdaftar') {
@@ -124,9 +109,9 @@ export default {
 
 .container {
     min-height: 100vh;
-    background-image: url("../assets/coffeshoplogo.jpg");
+    background-image: url("../assets/coffeshoplogo.png");
     background-repeat: no-repeat;
-    background-size: 500px;
+    background-size: 600px;
     background-position: 15% 50%;
 }
 

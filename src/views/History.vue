@@ -4,7 +4,7 @@
       class="col-12 sticky-top bg-white d-flex justify-content-between py-4 shadow"
     >
       <Navbar />
-      <h2 class="text-center">History</h2>
+      <h2 class="text-center">Pendapatan Toko</h2>
       <h2></h2>
     </header>
     <main class="col-12 mt-3">

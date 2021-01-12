@@ -5,6 +5,7 @@ import Products from "./views/Products"
 import History from "./views/History"
 import Login from "./views/Login"
 import Register from "./views/Register"
+import NotFoundPage from "./components/404"
 
 Vue.use(VueRouter)
 
@@ -37,7 +38,10 @@ const mainRouter = new VueRouter({
       name: "Register",
       component: Register,
   },
-
+    {
+      path : "/*",
+      component : NotFoundPage,  
+    }
 
   ],
 })

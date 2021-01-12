@@ -25,12 +25,12 @@
                 </div>
                 <div class="Register-inp">
                     <input
-                    :class="{'is-invalid': $v.email.$error}"
                         type="email"
                         name="email"
                         @blur="onBlur"
                         @focus="onFocus"
                         v-model="register.email"
+                        :class="{'is-invalid': $v.email.$error}"
                     />
                     <span data-placeholder="Email"/>
                 </div>
@@ -41,6 +41,7 @@
                         @blur="onBlur"
                         @focus="onFocus"
                         v-model="register.password" 
+                        :class="{'is-invalid': $v.password.$error}"
                     />
                     <span data-placeholder="Password"/>
                     
@@ -62,7 +63,7 @@
 <script>
 
 import axios from "axios"
-import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, email, } from 'vuelidate/lib/validators'
 
 export default {
     name: "Register",
@@ -72,7 +73,7 @@ export default {
             username: null,
             email: null,
             password: null,
-            role: "user",
+            role: "users",
             },
             cacheKey:'token',
             roleKey:'role',
@@ -82,20 +83,32 @@ export default {
     validations : {
        email : {
            required,
-			email,
+            email,
             maxLength: maxLength(50),
             minLength: minLength(2)
+       },
+       password : {
+           required,
+           minLength: minLength(3)
+
+
        }
     },
     methods: {
-        // submit () {
-        //     this.$v.$touch(); //VALIDASI DIJALANKAN
-		// 	if(this.$v.$error) return //APABILA ERROR MAKA STOP
-		// 	alert('Form submitted') //APABILA BERHASIL MENAMPILKAN ALERT
-        // },
+        submit () {
+            this.$v.$touch(); //VALIDASI DIJALANKAN
+			if(this.$v.$error) return //APABILA ERROR MAKA STOP
+        },
+        valid(email) {
+             const emailRegex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+             return emailRegex.test(email);
+    },
     formRegister(value) {
-        this.$v.$touch();
-        if(value.$v.error) return
+        // this.$v.$touch();
+        // if(value.$v.error) return
+        if(!this.valid(value.email)){
+        return alert('Email not valid!')
+      }
         if(value.username === '' || value.username === null){
         return alert('fill the name')
       }
@@ -123,7 +136,6 @@ export default {
         console.log(err);
       });
         },
-
         onFocus(event) {
             event.target.classList.add("focus")
         },
@@ -132,7 +144,7 @@ export default {
                 event.target.classList.remove("focus")
             }
         },
-
+    
         
     },
 }
@@ -257,7 +269,7 @@ h3 {
 
 
 .Register-inp {
-    border-bottom: 2px solid #dadada;
+    border-bottom: 2px solid #1d1c1c;
     position: relative;
     margin: 20px 0;
     width: 65%;
