@@ -1,16 +1,18 @@
-FROM node:latest
+FROM node:lts-alpine
 
-RUN npm install -g http-server
+RUN yarn global add http-server
+
+RUN mkdir -p /app
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn install
 
-COPY ..
+COPY . .
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 8080
 
