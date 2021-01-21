@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+    frontend:
+      container_name: frontend
+      image: mrizkiprmn/frontend:latest
+      ports: 
+          - "8181:8080"
+      networks: 
+          - netnet
+      mem_limit: 300m
+      mem_reservation: 100m
+      cpus: '1.0'
+      env_file: 
+          - ./frontend/.env.local
+
+
+networks: 
+    netnet:
+        driver: bridge
