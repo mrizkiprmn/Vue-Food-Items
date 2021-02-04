@@ -21,7 +21,7 @@
 
 ## Home
 ------------
-![home](https://user-images.githubusercontent.com/64014794/104283604-58db2b80-54e3-11eb-9b0a-baf50248e70b.png)
+![home(2)](https://user-images.githubusercontent.com/64014794/106871792-32d13180-6705-11eb-9f63-6fee1a660b93.png)
 
 
 ## Project setup
