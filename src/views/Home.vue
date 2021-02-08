@@ -1,12 +1,12 @@
 <template>
    <div class="row">
     <div class="col-sm-12 col-xl-9">
-      <header class="row sticky-top bg-white py-4 shadow">
+      <header class="row sticky-top bg-white py-2 shadow">
         <div class="col-3 col-md-1">
           <Navbar />
         </div>
         <div class="col-9 col-md-7 justify-content-between">
-          <h2 class="text-center">Toko Serba Ada</h2>
+          <h2 class="text-center">Food Items</h2>
           <h1></h1>
         </div>
         <div class="col-12 col-md-4 d-flex justify-content-end">
@@ -52,30 +52,35 @@
           class="col-sm-12 col-md-6 col-lg-4"
           v-for="items in datas"
           :key="items.id"
-          @click="addChart(items)"
         >
-          <Card :images="items.image" :name="items.name" :price="items.price" :prods="items" @addProd="addChart" />
+          <Card :images="items.image" :name="items.name" :price="items.price" :product="items"/>
         </article>
       </main>
     </div>
     <aside class="col-xl-3 bg-white border-left">
       <div
-        class="row sticky-top bg-white py-4 d-flex justify-content-center border-bottom"
+        class="row sticky-top bg-white py-3 d-flex justify-content-center border-bottom"
       >
         <h2 class="text-center">
-          Keranjang
+          Cart
           <span class="p-cart-0 bg-light text-info rounded-circle">
-            {{ chart.length }}
+            {{ quantity}}
           </span>
         </h2>
       </div>
-      <div class="row pt-2" v-if="chart.length > 0">
+      <div class="row pt-2" v-if="allCart.length > 0">
         <div
-          v-for="item of addItem"
+          v-for="(item, index) in allCart"
           :key="item.id"
           class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-12"
         >
-          <Cart :image="item.image" :name="item.name" :price="item.price"  />
+          <Cart
+          :id="index" 
+          :image="item.product.image" 
+          :name="item.product.name" 
+          :price="item.product.price"
+          :qty="item.qty"
+          :cart="item.product"  />
         </div>
 
         <div class="col-12 pt-4">
@@ -121,11 +126,11 @@
                 <div class="modal-body">
                   <div
                     class="d-flex justify-content-between"
-                    v-for="item of addItem"
-                    :key="item.id"
+                    v-for="item of allCart"
+                    :key="item.product.id"
                   >
-                    <p class="font-weight-bold">{{ item.name }}</p>
-                    <p class="font-weight-bold">Rp.{{ item.price }}</p>
+                    <p class="font-weight-bold">{{ item.product.name }}</p>
+                    <p class="font-weight-bold">Rp.{{ item.product.price }}</p>
                   </div>
                   <p class="font-weight-bold text-right">
                     Total : Rp.{{ calculate }}
@@ -135,7 +140,7 @@
                   </p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
+                  <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(allCart, calculate, cashier) & cartNull()">
                     Print
                   </button>
                   <!-- <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
@@ -148,7 +153,7 @@
           <button
             type="button"
             class="col btn btn-danger mt-2"
-            @click="cancel()"
+            @click="cartNull()"
           >
             Cancel
           </button>
@@ -157,9 +162,9 @@
       <div class="row" v-else>
         <div class="col container text-center">
           <img src="../assets/icon/food-and-restaurant.png" alt="" />
-          <h4>Keranjang belanja kamu kosong</h4>
+          <h4>Your cart is empty</h4>
           <p class="text-muted" style="font-size: 0.9rem;">
-            Pilih produk yang ingin dibeli di toko ini
+            Please add some items from the menu
           </p>
         </div>
       </div>
@@ -173,6 +178,7 @@ import Card from "../components/CardItems.vue";
 import Navbar from "../components/Navbar.vue";  
 import Cart from "../components/Cart.vue"
 import router from "../routes"
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   name: "Home",
@@ -186,15 +192,14 @@ export default {
       datas: null,
       chart: [],
       checkout:{
-        name:null,
         cashier:null,
-        total:null,
+        orders:null,
+        amount:null,
       },
       cashier: "Rizki",
       sorted:{
         name:'',
         price:'',
-        names:'',
       },
       srcName:{
         name:'',
@@ -204,11 +209,10 @@ export default {
       userKey: 'email',
       roleKey: 'role',
       role: '',
-      // username: '',
     };
   },
   methods: {
-    
+    ...mapActions(['cartNull']),
     loadProducts(){
       axios.get(process.env.VUE_APP_PRODUCT, {
         headers: {
@@ -279,20 +283,23 @@ export default {
         console.log(err);
       });
     },
-    addCheckout(valueNama, valueTotal, valueOrder){
-      for(let i = 0; i < valueNama.length; i++) {
-        if(valueNama.length == 1){
-          this.checkout.name += `${valueNama[i].name}`
+    addCheckout(valueOrders,valueTotal ,valueCashier){
+      this.checkout.orders = `{`
+      for(let i = 0; i < valueOrders.length; i++) {
+        if(valueOrders.length == 1){
+          this.checkout.orders += `${valueOrders[i].product.name}`
         }else{
           if(i == 0){
-            this.checkout.name += `${valueNama[i].name}`
+            this.checkout.orders += `${valueOrders[i].product.name}`
           }else{
-            this.checkout.name += `,${valueNama[i].name}`
+            this.checkout.orders += `,${valueOrders[i].product.name}`
           }
         }
+        
       }
+      this.checkout.cashier = valueCashier;
+      this.checkout.orders += `}`
       this.checkout.amount = valueTotal;
-      this.checkout.orders = valueOrder;
       console.log(this.checkout)
       
       axios.post(process.env.VUE_APP_HISTORY, this.checkout, {
@@ -306,17 +313,17 @@ export default {
       })
       .catch((err) => {
         console.log(err);
-        alert('Error Add Product!')
+        alert('Terimakasih telah memesan, Silahkan Pesan Kembali')
       });
     },
-    addChart(prod) {
+    addChart(value) {
       if (this.chart.length == 0) {
-        this.chart.push(prod);
+        this.chart.push(value);
       } else {
-        if (this.chart.includes(prod)) {
+        if (this.chart.includes(value)) {
           // this.chart.push(prod);
         } else {
-          this.chart.push(prod);
+          this.chart.push(value);
         }
       }
     },
@@ -325,23 +332,13 @@ export default {
     },
     filterOn() {
       this.filter = !this.filter;
-      this.sorted.name = '';
+      this.sorted.name= '';
       this.sorted.price = '';
       this.sortedProduct();
     },
   },
   computed: {
-    addItem() {
-      let item = this.chart;
-      return item;
-    },
-    calculate() {
-      let price = 0;
-      for (const data of this.chart) {
-        price = Number(data.price) + price;
-      }
-      return price.toFixed(2);
-    },
+    ...mapGetters(['allCart', 'calculate', 'quantity'])
   },
   mounted() {
     this.loadProducts()

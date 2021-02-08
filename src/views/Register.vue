@@ -10,7 +10,7 @@
             </div>
         <div class="Register-input-container">
             <div class="Register-text-explain">
-                <h2>Form Register</h2>
+                <h2>Register Form</h2>
             </div>
             <div class="Register-input">
                 <div class="Register-inp">
@@ -366,4 +366,305 @@ h3 {
     align-items: center;
     flex-direction: column;
 }
+
+@media  (max-width: 540px) {
+    
+.Register-login-form {
+    width: 68%;
+    height: 555px;
+    background: rgba(236, 240, 241, 0.678);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px -9px #000000;
+    display: flex;
+
+    .Register-img-container {
+        position: relative;
+        width: 190px;
+        height: 100%;
+        z-index: -1;
+
+    }
+}
+
+.Register-container {
+    font-family: "Roboto", sans-serif;
+    width: 80%;
+}
+
+.Register-input {
+    width: 100%;
+}
+
+
+.Register-inp {
+    border-bottom: 2px solid #1d1c1c;
+    width: 80%;
+
+    input {
+        font-size: 15px;
+        width: 80%;
+        color: #333;
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0 5px;
+        height: 40px;
+    }
+}
+
+.Register-input-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 20px;
+
+    .Register-input-name {
+        margin-top: 10px;
+
+        input {
+            color: #333;
+            background: none;
+            outline: none;
+            border: 1px solid #979797;
+            width: 250px;
+            padding-left: 5px;
+            height: 35px;
+            border-radius: 3px;
+            font-size: 15px;
+        }
+    }
+}
+.Register-text-explain {
+    margin-bottom: 30px;
+    font-family: "Roboto", sans-serif;
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 0px;
+        color: #0424d9;
+        text-align:left;
+    }
+}
+
+.Register-input {
+    align-items: center;
+    height: 80%;
+}
+
+
+.Register-inp {
+    border-bottom: 2px solid #1d1c1c;
+    position: relative;
+    margin: 20px 0;
+
+    input {
+        font-size: 15px;
+        width: 100%;
+        color: #333;
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0 5px;
+        height: 30px;
+    }
+}
+}
+
+@media (max-width: 768px) {
+
+.Register-container {
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+}
+
+.Register-input {
+    width: 100%;
+}
+
+
+.Register-inp {
+    border-bottom: 2px solid #1d1c1c;
+    width: 80%;
+
+    input {
+        font-size: 15px;
+        width: 80%;
+        color: #333;
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0 5px;
+        height: 40px;
+    }
+}
+.Register-input-container {
+    width: 150%;
+
+    .Register-input-name {
+
+
+        input {
+            width: 50px;
+            color: #333;
+            background: none;
+            outline: none;
+            border: 1px solid #979797;
+            padding-left: 5px;
+            border-radius: 3px;
+            font-size: 15px;
+        }
+    }
+}
+.Register-login-form {
+    width: 80%;
+    background: rgba(236, 240, 241, 0.678);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px -9px #000000;
+
+    .Register-img-container {
+        width: 80px;
+        z-index: -1;
+
+    }
+}
+
+.Register-text-explain {
+    margin-bottom: 30px;
+    font-family: "Roboto", sans-serif;
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 0px;
+        color: #0424d9;
+        text-align:center;
+    }
+}
+
+.Register-input {
+    align-items: center;
+    height: 80%;
+}
+
+
+.Register-inp {
+    border-bottom: 2px solid #1d1c1c;
+    position: relative;
+    margin: 20px 0;
+
+    input {
+        font-size: 15px;
+        width: 100%;
+        color: #333;
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0 5px;
+        height: 30px;
+    }
+}
+
+
+}
+
+@media (max-width: 1200px) {
+    .Register-container {
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+}
+
+.Register-input {
+    width: 100%;
+}
+
+    .Register-img-container {
+        position: relative;
+        width: 190px;
+        height: 100%;
+        z-index: -1;
+
+    }
+.Register-inp {
+    border-bottom: 2px solid #1d1c1c;
+    width: 80%;
+
+    input {
+        font-size: 15px;
+        width: 80%;
+        color: #333;
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0 5px;
+        height: 40px;
+    }
+}
+.Register-input-container {
+    width: 150%;
+
+    .Register-input-name {
+
+
+        input {
+            width: 50px;
+            color: #333;
+            background: none;
+            outline: none;
+            border: 1px solid #979797;
+            padding-left: 5px;
+            border-radius: 3px;
+            font-size: 15px;
+        }
+    }
+}
+.Register-login-form {
+    width: 80%;
+    background: rgba(236, 240, 241, 0.678);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px -9px #000000;
+
+    .Register-img-container {
+        width: 80px;
+        z-index: -1;
+
+    }
+}
+
+.Register-text-explain {
+    margin-bottom: 30px;
+    font-family: "Roboto", sans-serif;
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 0px;
+        color: #0424d9;
+        text-align:center;
+    }
+}
+
+.Register-input {
+    align-items: center;
+    height: 80%;
+}
+
+
+.Register-inp {
+    border-bottom: 2px solid #1d1c1c;
+    position: relative;
+    margin: 20px 0;
+
+    input {
+        font-size: 15px;
+        width: 100%;
+        color: #333;
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0 5px;
+        height: 30px;
+    }
+}
+
+}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex justify-content-center pb-3">
-    <div class="shadow" style="width: 18rem;" @click="addItems(prods)">
+  <div class="d-flex justify-content-center pb-5">
+    <div class="shadow" style="width: 18rem;" @click="addCart(product)">
       <img :src="images" :alt="name" class="card-img-top" />
       <div class="card-body border-top">
         <h5>{{ name }}</h5>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   name: "Card",
   props: {
@@ -26,15 +27,13 @@ export default {
       type: String,
       required: true,
     },
-    prods: {
+    product: {
       type: Object,
       required: true,
     }
   },
-  methods :{
-    addItems(value) {
-      this.$emit('addProd', value)
-    }
+  methods: {
+    ...mapActions(['addCart'])
   }
-};
+}
 </script>

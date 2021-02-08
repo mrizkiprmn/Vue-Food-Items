@@ -7,9 +7,9 @@
       <div class="col-8">
         <div class="">
           <p class="card-text pt-2">{{ name }}</p>
-          <div class="btn btn-danger" @click="less()">-</div>
+          <div class="btn btn-border" @click="delCart(id)">-</div>
           <div class="btn border">{{ qty }}</div>
-          <div class="btn btn-primary " @click="plus(addItems)">+</div>
+          <div class="btn btn-border " @click="addCart(cart)">+</div>
           <h5 class="card-title pt-3">Rp.{{ price * qty}}</h5>
         </div>
       </div>
@@ -18,9 +18,15 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 export default {
   name: "Cart",
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     image: {
       type: String,
       required: true,
@@ -33,30 +39,18 @@ export default {
       type: String,
       required: true,
     },
-    // jumlah : {
-    //   type : Number,
-    //   required : true,
-    // }
+    qty: {
+      type: Number,
+      required: true,
+    },
+    cart: {
+      type: Object,
+      required: true,
+    },
   },
-  data() {
-    return {
-      qty: 1,
-    };
-  },
+
   methods: {
-  
-    plus() {
-      if (this.qty >= 1) {
-        this.qty += 1;
-      }
-    },
-    less() {
-      if (this.qty == 1) {
-        // this.jumlah -= 1;
-      } else {
-        this.qty -= 1;
-      }
-    },
-  },
-};
+    ...mapActions(['addCart', 'delCart'])
+  }
+}
 </script>
