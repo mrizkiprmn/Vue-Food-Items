@@ -1,15 +1,14 @@
 <template>
    <div class="row">
     <div class="col-sm-12 col-xl-9">
-      <header class="row sticky-top bg-white py-2 shadow">
+      <header class="row sticky-top bg-white py-0 shadow">
         <div class="col-3 col-md-1">
           <Navbar />
         </div>
-        <div class="col-9 col-md-7 justify-content-between">
-          <h2 class="text-center">Food Items</h2>
-          <h1></h1>
+        <div class="col-12 col-md-7 justify-content-between">
+          <h2 style="font-size: 33px;" class="text-center py-1">Food Items</h2>
         </div>
-        <div class="col-12 col-md-4 d-flex justify-content-end">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
           <form action="#" class="form-inline my-2 my-lg-0">
             <input
               v-model="srcName.name"
@@ -27,7 +26,7 @@
           </button>
         </div>
         <div v-if="filter" class="col-12 text-center border-top">
-          <div class="row">
+          <div class="row m-2 py-1">
             <div class="col-6 col-md-4 d-flex justify-content-center mt-3">
               <h5>Sort</h5>
               <select class="form-select ml-2" aria-label="Default select example" v-model="sorted.name" @click="sortedProduct()">
@@ -59,39 +58,40 @@
     </div>
     <aside class="col-xl-3 bg-white border-left">
       <div
-        class="row sticky-top bg-white py-3 d-flex justify-content-center border-bottom"
+        class="row sticky-top bg-white py-2 d-flex justify-content-center border-bottom"
       >
         <h2 class="text-center">
-          Cart
-          <span class="p-cart-0 bg-light text-info rounded-circle">
+          <img src="../assets/icon/shopping-cart-solid.svg" style="width: 2rem;" alt="">
+          <span style="font-size: 1.5rem;" class="text-center text-white rounded-circle bg-info pr-2 m-1 text-center">
             {{ quantity}}
           </span>
         </h2>
       </div>
-      <div class="row pt-2" v-if="allCart.length > 0">
+      <div class="row pt-3" v-if="allCart.length > 0">
         <div
           v-for="(item, index) in allCart"
           :key="item.id"
-          class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-12"
+          class="col-12 col-xl-6 col-md-6 col-lg-4 col-xl-12"
         >
-          <Cart
+          <Cart class="d-flex border-0"
           :id="index" 
           :image="item.product.image" 
           :name="item.product.name" 
           :price="item.product.price"
           :qty="item.qty"
-          :cart="item.product"  />
+          :cart="item.product"/>
         </div>
 
         <div class="col-12 pt-4">
           <div class="d-flex justify-content-between">
             <h3>Total:</h3>
-            <h3>Rp.{{ calculate }}</h3>
+            <h3>{{toRupiah (calculate) }}*</h3>
           </div>
           <!-- Button trigger modal -->
+          <h7>*belum termasuk PB1</h7>
           <button
             type="button"
-            class="col btn btn-primary"
+            class="col btn btn-info mt-2"
             data-toggle="modal"
             data-target="#exampleModalLong"
           >
@@ -109,11 +109,10 @@
           >
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-light">
                   <h3 class="modal-title" id="exampleModalLongTitle">
                     Checkout
                   </h3>
-
                   <button
                     type="button"
                     class="close"
@@ -123,29 +122,33 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-light">
+                  <p class="font-weight-bold text-right">Receipt no:{{randomInvoice(invoices)}}</p>
+                  <p class="fst-normal text-left">Cashier: {{ cashier }}</p>
                   <div
                     class="d-flex justify-content-between"
                     v-for="item of allCart"
                     :key="item.product.id"
                   >
-                    <p class="font-weight-bold">{{ item.product.name }}</p>
-                    <p class="font-weight-bold">Rp.{{ item.product.price }}</p>
+                 
+                    <p class="font-weight-bold">{{ item.product.name}} x {{item.qty}}</p>
+                    <p class="font-weight-bold">{{toRupiah (item.product.price) }}</p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="font-weight-bold">PB1 10% </p>
+                    <p class="font-weight-bold">{{toRupiah(ppn)}}</p>
                   </div>
                   <p class="font-weight-bold text-right">
-                    Total : Rp.{{ calculate }}
+                    Total : {{toRupiah (calculate + ppn) }} 
                   </p>
-                  <p class="font-weight-bold text-left">
-                    Cashier : {{ cashier }}
-                  </p>
+                  <p class="font-weight-bold text-left pt-2">Payment:Cash</p>
+                  
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(allCart, calculate, cashier) & cartNull()">
+
+                <div class="modal-footer bg-light">
+                  <button type="button" class="col btn btn-info" data-dismiss="modal" @click="addCheckout(allCart, (calculate+ppn), cashier, userName, invoices) & cartNull()">
                     Print
                   </button>
-                  <!-- <button type="button" class="col btn btn-primary" data-dismiss="modal" @click="addCheckout(addItem, calculate, cashier)">
-                    Send Email
-                  </button> -->
                 </div>
               </div>
             </div>
@@ -161,7 +164,7 @@
       </div>
       <div class="row" v-else>
         <div class="col container text-center">
-          <img src="../assets/icon/food-and-restaurant.png" alt="" />
+          <img class="bg-info mb-2" style="height: 9rem; width: 11rem;" src="../assets/icon/food-and-restaurant-2.png" alt="" />
           <h4>Your cart is empty</h4>
           <p class="text-muted" style="font-size: 0.9rem;">
             Please add some items from the menu
@@ -195,6 +198,8 @@ export default {
         cashier:null,
         orders:null,
         amount:null,
+        users:null,
+        invoices:null,
       },
       cashier: "Rizki",
       sorted:{
@@ -206,15 +211,28 @@ export default {
       },
       filter: false,
       cacheKey: 'token',
-      userKey: 'email',
-      roleKey: 'role',
-      role: '',
+      userKey: 'username',
+      userName: '',
+      invoices: '',
+
+      
     };
   },
   methods: {
+    randomInvoice(value) {
+      return "#" + Math.round(Math.random(value) * 50000 + 1);
+    },
+    toRupiah(value) {
+      return (
+        "Rp. " +
+        Math.round(value)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
+      );
+    },
     ...mapActions(['cartNull']),
     loadProducts(){
-      axios.get(process.env.VUE_APP_PRODUCT, {
+      axios.get(process.env.VUE_APP_URL + "product", {
         headers: {
           authtoken: localStorage.getItem(this.cacheKey)
         }
@@ -242,7 +260,7 @@ export default {
     },
     sortedProduct(){
       axios
-      .get(process.env.VUE_APP_SORT+ `?orderBy=${this.sorted.price}&sort=${this.sorted.name}`,{
+      .get(process.env.VUE_APP_URL + "product" + "/sort" + `?orderBy=${this.sorted.price}&sort=${this.sorted.name}`,{
         headers: {
           authtoken: localStorage.getItem(this.cacheKey)
         }
@@ -270,7 +288,7 @@ export default {
     },
     searchName(){
       axios
-      .get(process.env.VUE_APP_PRODUCT+ `/search?search=${this.srcName.name}`, {
+      .get(process.env.VUE_APP_URL + "product" + `/search?search=${this.srcName.name}`, {
         headers: {
           authtoken: localStorage.getItem(this.cacheKey)
         }
@@ -283,8 +301,8 @@ export default {
         console.log(err);
       });
     },
-    addCheckout(valueOrders,valueTotal ,valueCashier){
-      this.checkout.orders = `{`
+    addCheckout(valueOrders,valueTotal, valueCashier, valueUser, valueInvoices){
+      this.checkout.orders = ''
       for(let i = 0; i < valueOrders.length; i++) {
         if(valueOrders.length == 1){
           this.checkout.orders += `${valueOrders[i].product.name}`
@@ -294,26 +312,32 @@ export default {
           }else{
             this.checkout.orders += `,${valueOrders[i].product.name}`
           }
+
         }
-        
       }
       this.checkout.cashier = valueCashier;
-      this.checkout.orders += `}`
+      this.checkout.orders += ''
       this.checkout.amount = valueTotal;
+      this.checkout.users = valueUser;
+      this.Invoices = valueInvoices
+      this.checkout.invoices += '';
+      // this.checkout.invoices = valueInvoices;
+      
+    
       console.log(this.checkout)
       
-      axios.post(process.env.VUE_APP_HISTORY, this.checkout, {
+      axios.post(process.env.VUE_APP_URL + "history", this.checkout, {
         headers: {
           authtoken: localStorage.getItem(this.cacheKey)
         }
       })
       .then(() => {
         this.chart = [];
-        alert('Success Checkout!')
+        alert('Thanks for Order, Enjoy!')
       })
       .catch((err) => {
         console.log(err);
-        alert('Terimakasih telah memesan, Silahkan Pesan Kembali')
+        alert('Sorry ')
       });
     },
     addChart(value) {
@@ -338,15 +362,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['allCart', 'calculate', 'quantity'])
+    ...mapGetters(['allCart', 'calculate', 'quantity', 'ppn'])
   },
   mounted() {
     this.loadProducts()
     this.sortedProduct()
     this.searchName()
-    this.role = localStorage.getItem(this.roleKey)
-    console.log(this.role)
-    this.email = localStorage.getItem(this.userKey)
+    this.userName = localStorage.getItem(this.userKey)
+    // this.Invoices = localStorage.getItem(this.randomInvoices)
 
   },
 };

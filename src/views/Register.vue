@@ -17,7 +17,7 @@
                     <input
                         type="text"
                         name="username"
-                        @blur="onBlur"
+                         @blur="onBlur"
                         @focus="onFocus"
                         v-model="register.username"
                         />
@@ -30,7 +30,6 @@
                         @blur="onBlur"
                         @focus="onFocus"
                         v-model="register.email"
-                        :class="{'is-invalid': $v.email.$error}"
                     />
                     <span data-placeholder="Email"/>
                 </div>
@@ -40,8 +39,7 @@
                         name="password"
                         @blur="onBlur"
                         @focus="onFocus"
-                        v-model="register.password" 
-                        :class="{'is-invalid': $v.password.$error}"
+                        v-model="register.password"
                     />
                     <span data-placeholder="Password"/>
                     
@@ -73,7 +71,7 @@ export default {
             username: null,
             email: null,
             password: null,
-            role: "users",
+            role: "user",
             },
             cacheKey:'token',
             roleKey:'role',
@@ -87,12 +85,6 @@ export default {
             maxLength: maxLength(50),
             minLength: minLength(2)
        },
-       password : {
-           required,
-           minLength: minLength(3)
-
-
-       }
     },
     methods: {
         submit () {
@@ -120,11 +112,15 @@ export default {
       }
       
        axios
-      .post(process.env.VUE_APP_USERS, value)
+      .post(process.env.VUE_APP_URL + "users", value)
       .then((res) => {
-        if(res.data.result[0].msg === 'Username/email has been registered'){
-          alert('Username/email has been registered!');
-        }else{
+        if(res.data.result[0].msg === "username has been registered"){
+          alert('Username has been registered');
+        } 
+        else if(res.data.result[0].msg === "email has been registered") {
+            alert('Email has been registered')
+        }
+        else{
           alert('Register Success');
           this.register.username = null;
           this.register.email = null;

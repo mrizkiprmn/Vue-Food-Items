@@ -50,7 +50,7 @@
 import Axios from 'axios'
 import router from '../routes'
 export default {
-    name: "Login",
+    name: "login",
     data() {
         return {
           showPassword: false,
@@ -60,24 +60,25 @@ export default {
           },
           cacheKey:'token',
           roleKey:'role',
-          userKey:'email'
+          userKey:'username'
         }
     },
    
     methods: {
       login(value) {
-            Axios.post(process.env.VUE_APP_AUTH, value)
+            Axios.post(process.env.VUE_APP_URL + "auth", value)
             .then((res) => {
-        if(res.data.result[0].msg === 'Email belum terdaftar') {
-          return alert('Email belum terdaftar');
+        if(res.data.result[0].msg === "Email not registered") {
+          alert('Email not registered');
         }
-        if(res.data.result[0].msg === "Anda gagal Login, password salah"){
-          return alert('Anda gagal Login, password salah');
+        if(res.data.result[0].msg === "Check Password"){
+          alert('Check Password');
         }
         if(res.data.result[0].msg === 'Token created'){
           localStorage.setItem(this.cacheKey, res.data.result[0].token);
           localStorage.setItem(this.roleKey, res.data.result[0].role);
-          localStorage.setItem(this.userKey, res.data.result[0].email);
+          localStorage.setItem(this.userKey, res.data.result[0].username);
+        alert('Login Success')
           router.push('Home');
         }
       })

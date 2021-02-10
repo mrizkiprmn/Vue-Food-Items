@@ -20,6 +20,13 @@ const cart = {
         }
         return qty;
       },
+      ppn: (state) => {
+        let ppn = 0;
+        for (const key in state.cart) {
+          ppn = ppn +  state.cart[key].product.price * state.cart[key].qty *(10/100);
+        }
+        return ppn;
+      },
     },
     actions: {
       addCart({commit, state}, data) {
